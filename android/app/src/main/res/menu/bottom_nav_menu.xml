@@ -10,7 +10,7 @@
         android:id="@+id/navigation_camera"
         android:icon="@drawable/ic_camera_24dp"
         android:title="@string/title_camera"
-        android:onClick="startCameraActivity"/>
+        android:onClick="startImageCaptureActivity"/>
 
     <item
         android:id="@+id/navigation_notifications"
