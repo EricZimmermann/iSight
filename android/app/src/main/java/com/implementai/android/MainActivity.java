@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         requestPermissions();
     }
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             this.requestPermissions(new String[] {Manifest.permission.CAMERA},
                     RequestCodes.REQUEST_IMAGE_CAPTURE);
         }
+
         if (this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_DENIED) {
             this.requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
