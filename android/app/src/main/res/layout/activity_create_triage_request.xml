@@ -4,113 +4,119 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#B0F1D6"
     android:orientation="vertical"
     tools:context=".CreateTriageRequestActivity">
 
 
-
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="50dp"
         android:orientation="vertical">
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/TriageFormName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:orientation="horizontal">
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:selectAllOnFocus="false"
+            android:text="@string/text_name"
+            android:textColor="#4E878C"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
 
-            <TextView
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:text="@string/text_name"
-                android:textSize="12pt"/>
+    </LinearLayout>
 
-            <EditText
-                android:id="@+id/TriageFormName"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/form_request_name"
-                android:textSize="12pt"/>
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/TriageFormEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:orientation="horizontal">
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:selectAllOnFocus="false"
+            android:text="@string/text_email"
+            android:textColor="#4E878C"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:text="@string/text_email"
-                android:textSize="12pt"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/TriageFormEmail"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/form_request_email"
-                android:textSize="12pt"/>
-        </LinearLayout>
-
-        <LinearLayout
+        <EditText
+            android:id="@+id/TriageFormDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:orientation="horizontal">
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:ems="10"
+            android:inputType="textLongMessage|textMultiLine|textPersonName"
+            android:selectAllOnFocus="false"
+            android:text="@string/text_description"
+            android:textColor="#4E878C"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:text="@string/text_description"
-                android:textSize="12pt"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/TriageFormDescription"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/form_request_description"
-                android:textSize="12pt"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_take_picture"
-                android:textSize="12pt"
-                android:textAllCaps="false"
-                android:layout_gravity="center_vertical"
-                android:onClick="startImageCaptureActivity"/>
-
-            <ImageView
-                android:id="@+id/TriageFormThumb"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
-            >
+            android:background="@drawable/custom_rounded_corners"
+            android:onClick="startImageCaptureActivity"
+            android:text="@string/text_take_picture"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="12pt"
+            android:textStyle="bold" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/TriageFormThumb"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp" />
+    </LinearLayout>
 
-                android:text="@string/text_submit_request"
-                android:textSize="12pt"
-                android:textAllCaps="false"
-                android:onClick="submitRequest"/>
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
 
-
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:background="@drawable/custom_rounded_corners"
+            android:onClick="submitRequest"
+            android:text="@string/text_submit_request"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="12pt"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
