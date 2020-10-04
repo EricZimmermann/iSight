@@ -1,12 +1,14 @@
 import base64
 import datetime
 import io
+import json
 import os
 
 import requests
 from PIL import Image
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
 from werkzeug.utils import secure_filename
 # from socket import gethostname
 
@@ -18,6 +20,7 @@ app.config["IMAGE_UPLOADS"] = 'static/uploads'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + app.root_path + '/db_implementai2020triage.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 
 
 class Triage(db.Model):
@@ -63,11 +66,28 @@ def new_triage_request():
     return render_template('new-triage.html')
 
 
+@app.route('/get-triages', methods=['GET', 'POST'])
+def get_triages():
+    if request.method == 'GET':
+        email = str(request.args.get('email'))
+        connection = engine.raw_connection()
+        cur = connection.cursor()
+        cur.execute('SELECT * FROM triages WHERE email = "{0}"'.format(email))
+        row_headers = [x[0] for x in cur.description]
+        rv = cur.fetchall()
+        json_data = []
+        for result in rv:
+            json_data.append(dict(zip(row_headers, result)))
+        return jsonify(requests=json_data)
+        # return json.dumps(json_data)
+    return render_template('get-triages.html')
+
+
 @app.route('/dummy')
 def dummy_request():
     # url = 'http://implementai2020triage.pythonanywhere.com/new-triage'
     url = 'http://127.0.0.1:5000/new-triage'
-    email = 'implementai2020triage@gmail.com'
+    email = 'test@gmail.com'
     name = 'Left Arm Birthmark'
     description = 'Dark brown birthmark on left arm'
     with open('static/lenna.png', 'rb') as image_file:
