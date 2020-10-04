@@ -1,4 +1,7 @@
-# Implement AI
+<div style="text-align:center"><img src=logo.png/></div>
+  
+# iSight
+Personal smartphone skin lesion detection (Prototype)
 
 The repository containing our iSight project developed during the implementAI2020 hackathon hosted by MAIS.
 The project is divided into 3 main components, the deep learning algorithm, the backend, the app (android).
