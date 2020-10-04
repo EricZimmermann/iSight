@@ -3,7 +3,7 @@
 ***
 
 # iSight
-Prototype personal smartphone skin lesion detection
+Prototype personal smartphone skin lesion detection. Check out our video [demo](https://youtu.be/wVZfe1e639c).
 
 The repository containing our iSight project developed during the implementAI2020 hackathon hosted by MAIS.
 The project is divided into 3 main components, the deep learning algorithm, the backend, the app (android).
