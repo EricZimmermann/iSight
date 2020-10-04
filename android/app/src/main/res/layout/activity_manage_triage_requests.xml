@@ -8,63 +8,78 @@
     android:orientation="vertical"
     tools:context=".ManageTriageRequestsActivity" >
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="10pt"
+        android:text="Name    Confident    Disease"
+        />
+
     <ScrollView
         android:id="@+id/manage_triage_parent_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/triage_request_summary"
+        <TextView
+            android:id="@+id/triage_request_summary_text"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="#4E878C"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:textSize="10pt"
+            android:text=""
+            />
 
-            <ImageView
-                android:id="@+id/triage_summary_image"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_margin="10dp"
-                tools:srcCompat="@tools:sample/avatars" />
+<!--        <LinearLayout-->
+<!--            android:id="@+id/triage_request_summary"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="150dp"-->
+<!--            android:background="#4E878C"-->
+<!--            android:orientation="horizontal">-->
 
-            <LinearLayout
-                android:layout_width="250dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+<!--            <ImageView-->
+<!--                android:id="@+id/triage_summary_image"-->
+<!--                android:layout_width="75dp"-->
+<!--                android:layout_height="75dp"-->
+<!--                android:layout_margin="10dp"-->
+<!--                tools:srcCompat="@tools:sample/avatars" />-->
 
-                <TextView
-                    android:id="@+id/triage_summary_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Name of Triage Request"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
+<!--            <LinearLayout-->
+<!--                android:layout_width="250dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="vertical">-->
 
-                <TextView
-                    android:id="@+id/triage_summary_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="description..."
-                    android:textColor="#00241B" />
+<!--                <TextView-->
+<!--                    android:id="@+id/triage_summary_name"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:text="Name of Triage Request"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textSize="18sp" />-->
 
-                <TextView
-                    android:id="@+id/triage_summary_timestamp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="timestamp" />
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:id="@+id/triage_summary_description"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="description..."-->
+<!--                    android:textColor="#00241B" />-->
 
-            <TextView
-                android:id="@+id/triage_summary_confidence"
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="87%"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+<!--                <TextView-->
+<!--                    android:id="@+id/triage_summary_timestamp"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="timestamp" />-->
+<!--            </LinearLayout>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/triage_summary_confidence"-->
+<!--                android:layout_width="60dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:gravity="center"-->
+<!--                android:text="87%"-->
+<!--                android:textColor="#FFFFFF"-->
+<!--                android:textSize="20sp"-->
+<!--                android:textStyle="bold" />-->
+<!--        </LinearLayout>-->
 
     </ScrollView>
 

@@ -64,39 +64,51 @@ public class ManageTriageRequestsActivity extends AppCompatActivity {
 
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String name = (String) jsonObject.get("name");
-                String description = (String) jsonObject.get("description");
-                double confidence = (double) jsonObject.get("confidence");
+                String disease = (String) jsonObject.get("disease");
+                String confident = (String) jsonObject.get("conf");
+                double prob = (double) jsonObject.get("prob");
                 byte[] imageArray = new byte[]{1,2,3};
 
-                triageSummaries.add(new TriageSummary(name, description, confidence, imageArray));
+                triageSummaries.add(new TriageSummary(name, confident, disease, prob, imageArray));
             }
-            System.out.println(triageSummaries);
+//            System.out.println(triageSummaries);
 
-            LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext()
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext()
+//                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//
+//            LinearLayout parentView = (LinearLayout) layoutInflater.inflate(
+//                    R.layout.activity_manage_triage_requests, null);
 
-            LinearLayout parentView = (LinearLayout) layoutInflater.inflate(
-                    R.layout.activity_manage_triage_requests, null);
+            TextView textView = findViewById(R.id.triage_request_summary_text);
+
+            StringBuilder builder = new StringBuilder();
 
             for (TriageSummary summary: triageSummaries) {
-                LinearLayout childView = findViewById(R.id.triage_request_summary);
-
-                parentView.addView(childView);
-
-                TextView viewName = findViewById(R.id.triage_summary_name);
-                viewName.setText(summary.name);
-
-                TextView viewDescription = findViewById(R.id.triage_summary_description);
-                viewDescription.setText(summary.description);
-
-                TextView viewTimestamp = findViewById(R.id.triage_summary_timestamp);
-                viewTimestamp.setText("");
-
-                TextView viewConfidence = findViewById(R.id.triage_summary_confidence);
-                viewConfidence.setText(String.valueOf(summary.confidence));
+//                LinearLayout childView = findViewById(R.id.triage_request_summary);
+//
+//                parentView.addView(childView);
+//
+//                TextView viewName = findViewById(R.id.triage_summary_name);
+//                viewName.setText(summary.name);
+//
+//                TextView viewDescription = findViewById(R.id.triage_summary_description);
+//                viewDescription.setText(summary.description);
+//
+//                TextView viewTimestamp = findViewById(R.id.triage_summary_timestamp);
+//                viewTimestamp.setText("");
+//
+//                TextView viewConfidence = findViewById(R.id.triage_summary_confidence);
+//                viewConfidence.setText(String.valueOf(summary.confidence));
 
 //                parentView.addView(childView);
+                builder.append(summary.name);
+                builder.append("        ");
+                builder.append(summary.confident);
+                builder.append("            ");
+                builder.append(summary.disease);
+                builder.append("\n");
             }
+            textView.setText(builder.toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -105,14 +117,18 @@ public class ManageTriageRequestsActivity extends AppCompatActivity {
 
     private class TriageSummary {
         String name;
-        String description;
+        String confident;
+        String disease;
+        double prob;
         double confidence;
         byte[] imageArray;
 
-        public TriageSummary(String name, String description, double confidence, byte[] imageArray) {
+        public TriageSummary(String name, String confident, String disease, double prob,
+                             byte[] imageArray) {
             this.name = name;
-            this.description = description;
-            this.confidence = confidence;
+            this.confident = confident;
+            this.disease = disease;
+            this.prob = prob;
             this.imageArray = imageArray;
         }
     }

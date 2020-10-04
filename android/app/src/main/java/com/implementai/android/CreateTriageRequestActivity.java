@@ -47,6 +47,7 @@ public class CreateTriageRequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_triage_request);
+        getSupportActionBar().hide();
     }
 
     public void startImageCaptureActivity(View view) {
@@ -112,6 +113,8 @@ public class CreateTriageRequestActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest request = createJsonObjectRequest(form);
         queue.add(request);
+
+        Toast.makeText(this, "Request submitted", Toast.LENGTH_SHORT).show();
     }
 
     private JsonObjectRequest createJsonObjectRequest(TriageCase form) throws JSONException {

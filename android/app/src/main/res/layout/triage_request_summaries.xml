@@ -2,11 +2,11 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="150dp"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:id="@+id/triage_request_summary"
+    android:background="#4E878C"
     android:orientation="horizontal">
-<!--    android:id="@+id/triage_request_summary"-->
-<!--    android:background="#4E878C"-->
 
 <!--    <ImageView-->
 <!--        android:id="@+id/triage_summary_image"-->
