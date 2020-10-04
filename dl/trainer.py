@@ -1,4 +1,5 @@
 import torch.nn.functional as F
+import torch
 
 # efficent gradient clear (better than optim.zero_grad)
 def flushGrads(model):    
@@ -6,7 +7,7 @@ def flushGrads(model):
         param.grad = None 
     
 # single optimization iteration
-def train(model, criterion, optimizer, scheduler, loader, device):
+def train(model, criterion, optimizer, scheduler, loader, device, txf=None):
     
     batch_total = 0.0
     accuracy = 0.0
@@ -17,6 +18,9 @@ def train(model, criterion, optimizer, scheduler, loader, device):
     model.train()
     for idx, (inputs, targets) in enumerate(loader):
         inputs, targets = inputs.to(device), targets.to(device)
+        if txf is not None:
+            with torch.no_grad():
+                inputs = txf(inputs)
         flushGrads(model)
         outputs = model(inputs)
         loss = criterion(outputs, targets)
@@ -50,8 +54,6 @@ def evaluate(model, criterion, optimizer, scheduler, loader, device):
             flushGrads(model)
             outputs = model(inputs)
             loss = criterion(outputs, targets)
-            loss.backward()
-            optimizer.step()
 
             average_loss += loss
             preds = F.softmax(outputs, dim=1).argmax(dim=1)
