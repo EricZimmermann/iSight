@@ -27,9 +27,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 
 public class CreateTriageRequestActivity extends AppCompatActivity {
@@ -133,7 +131,7 @@ public class CreateTriageRequestActivity extends AppCompatActivity {
         final EditText eName = (EditText) findViewById(R.id.TriageFormName);
         String name = eName.getText().toString();
 
-        final EditText eEmail = (EditText) findViewById(R.id.TriageFormEmail);
+        final EditText eEmail = (EditText) findViewById(R.id.TriageFormName);
         String email = eEmail.getText().toString();
 
         final EditText eDescription = (EditText) findViewById(R.id.TriageFormDescription);
