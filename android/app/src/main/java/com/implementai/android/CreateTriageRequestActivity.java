@@ -2,7 +2,6 @@ package com.implementai.android;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-import androidx.room.Room;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -23,7 +22,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.implementai.android.db.AppDatabase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -109,14 +107,14 @@ public class CreateTriageRequestActivity extends AppCompatActivity {
 
     public void submitRequest(View view) throws IOException, JSONException {
 
-        TriageForm form = createForm();
+        TriageCase form = createCaseFromFields();
 
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest request = createJsonObjectRequest(form);
         queue.add(request);
     }
 
-    private JsonObjectRequest createJsonObjectRequest(TriageForm form) throws JSONException {
+    private JsonObjectRequest createJsonObjectRequest(TriageCase form) throws JSONException {
         String url = "http://implementai2020triage.pythonanywhere.com/new-triage";
 
         JSONObject requestBody = new JSONObject();
@@ -145,11 +143,11 @@ public class CreateTriageRequestActivity extends AppCompatActivity {
         return jsonObjectRequest;
     }
 
-    private TriageForm createForm() {
+    private TriageCase createCaseFromFields() {
         final EditText eName = (EditText) findViewById(R.id.TriageFormName);
         String name = eName.getText().toString();
 
-        final EditText eEmail = (EditText) findViewById(R.id.TriageFormName);
+        final EditText eEmail = (EditText) findViewById(R.id.TriageFormEmail);
         String email = eEmail.getText().toString();
 
         final EditText eDescription = (EditText) findViewById(R.id.TriageFormDescription);
@@ -159,20 +157,7 @@ public class CreateTriageRequestActivity extends AppCompatActivity {
         currentImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] imageArray = Base64.encode(stream.toByteArray(), 0);
 
-        return new TriageForm(name, email, description, imageArray);
+        return new TriageCase(name, email, description, imageArray);
     }
 
-    private class TriageForm {
-        public String name;
-        public String email;
-        public String description;
-        public byte[] imageArray;
-
-        public TriageForm(String name, String email, String description, byte[] imageArray) {
-            this.name = name;
-            this.email = email;
-            this.description = description;
-            this.imageArray = imageArray;
-        }
-    }
 }
