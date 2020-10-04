@@ -10,7 +10,6 @@ def flushGrads(model):
 def train(model, criterion, optimizer, scheduler, loader, device, txf=None):
     
     batch_total = 0.0
-    accuracy = 0.0
     average_loss = 0.0
     labels = []
     predictions = []
@@ -42,7 +41,6 @@ def train(model, criterion, optimizer, scheduler, loader, device, txf=None):
 def evaluate(model, criterion, optimizer, scheduler, loader, device):
 
     batch_total = 0.0
-    accuracy = 0.0
     average_loss = 0.0
     labels = []
     predictions = [] 
