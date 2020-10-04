@@ -31,17 +31,13 @@ class Triage(db.Model):
     name = db.Column(db.String(1024), nullable=False)
     description = db.Column(db.String(1024))
     image_url = db.Column(db.String(1024), nullable=False, default='')
-    disease1 = db.Column(db.String(1024), nullable=True)
-    disease2 = db.Column(db.String(1024), nullable=True)
-    disease3 = db.Column(db.String(1024), nullable=True)
-    prob1 = db.Column(db.Float, nullable=True)
-    prob2 = db.Column(db.Float, nullable=True)
-    prob3 = db.Column(db.Float, nullable=True)
+    disease = db.Column(db.String(1024), nullable=True)
+    prob = db.Column(db.Float, nullable=True)
     conf = db.Column(db.String(1024), nullable=True)
     timestamp = db.Column(db.DateTime, default=datetime.datetime.now)
 
     def __repr__(self):
-        return f"<Email: {self.email}, Name: {self.name}, Description: {self.description}, Image URL: {self.image_url}, Disease1: {self.disease1}, Disease2: {self.disease2}, Disease3: {self.disease3}, Prob1: {self.prob1}, Prob2: {self.prob2}, Prob3: {self.prob3}, Confidence: {self.conf}, Timestamp: {self.timestamp}>"
+        return f"<Email: {self.email}, Name: {self.name}, Description: {self.description}, Image URL: {self.image_url}, Disease: {self.disease}, Prob: {self.prob}, Confidence: {self.conf}, Timestamp: {self.timestamp}>"
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -56,12 +52,8 @@ def new_triage_request():
         name = request.json['name']
         description = request.json['description']
         image_base64 = request.json['image_base64']
-        disease1 = 'one'
-        disease2 = 'two'
-        disease3 = 'three'
-        prob1 = 42.69
-        prob2 = 87.23
-        prob3 = 96.11
+        disease = 'one'
+        prob = 42.69
         conf = 'confident'
         decoded_image = base64.b64decode(image_base64.encode('utf-8'))
         image = Image.open(io.BytesIO(decoded_image))
@@ -69,10 +61,10 @@ def new_triage_request():
         filename = secure_filename(str(primarykey_index) + '.jpg')
         image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
         new_triage = Triage(email=str(email), name=str(name), description=str(description),
-                            image_url=request.url_root + 'static/uploads/' + filename, disease1=disease1, disease2=disease2, disease3=disease3, prob1=prob1, prob2=prob2, prob3=prob3, conf=conf)
+                            image_url=request.url_root + 'static/uploads/' + filename, disease=disease, prob=prob, conf=conf)
         db.session.add(new_triage)
         db.session.commit()
-        return jsonify({'disease1': str(disease1), 'disease2': str(disease2), 'disease3': str(disease3), 'prob1': float(prob1), 'prob2': float(prob2), 'prob3': float(prob3), 'conf': str(conf), })
+        return jsonify({'disease': str(disease), 'prob': float(prob), 'conf': str(conf), })
     return render_template('new-triage.html')
 
 
