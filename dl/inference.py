@@ -7,9 +7,6 @@ import os
 import numpy as np
 from skimage import io
 from skimage.transform import resize
-import cv2
-import matplotlib.pyplot as plt
-
 rejected_models = [1,3]
 var_tresholding = [0.0113876,  0.015099, 0.01973732, 0.00275105, 0.02780673, 0.02693587, 0.00160483]
 inverse_mapping = {0:"Bowen's Disease", 
