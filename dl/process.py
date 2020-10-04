@@ -33,12 +33,24 @@ def generateExperiment(data_file, n_cls):
         
     return experiment
 
+def restructureExperiments(experiment):
+    
+    restructred = {'train' : {}, 'validation' : {}}
+    for key in experiment.keys():
+        if key != 'test':
+            restructred['train'].update(experiment[key]['train'])
+            restructred['validation'].update(experiment[key]['validation'])
+        else:
+            restructred['test'] = experiment['test']
+     
+    return restructred
+
 class Transformer():
     def __init__(self):
-        self.transformation = []
+        self.transformations = []
     
     def add(self, txf):
-        self.transformation.append(txf)
+        self.transformations.append(txf)
         
     def transforms(self):
         return torchvision.transforms.Compose(self.transformations)
@@ -73,7 +85,7 @@ class SkinSet(Dataset):
         patient = self.data[self.IDs[idx]]
         image = np.load(patient['image'])
         label = patient['label']
-        
+
         if self.transforms is not None:
             image = self.transforms(image)
             
