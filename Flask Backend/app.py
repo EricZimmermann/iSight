@@ -10,12 +10,13 @@ from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from werkzeug.utils import secure_filename
+from inference import infer
 # from socket import gethostname
 
 app = Flask(__name__)
 
 app.config["IMAGE_UPLOADS"] = 'static/uploads'
-# SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://hubjon:hubjon-mysql@hubjon.mysql.pythonanywhere-services.com/hubjon$db_hubjon'
+# SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://implementai2020t:Helloworld1!@implementai2020triage.mysql.pythonanywhere-services.com/implementai2020t$implementai2020triage'
 # app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + app.root_path + '/db_implementai2020triage.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -40,7 +41,7 @@ class Triage(db.Model):
         return f"<Email: {self.email}, Name: {self.name}, Description: {self.description}, Image URL: {self.image_url}, Disease: {self.disease}, Prob: {self.prob}, Confidence: {self.conf}, Timestamp: {self.timestamp}>"
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def default():
     return render_template('base.html')
 
@@ -52,16 +53,17 @@ def new_triage_request():
         name = request.json['name']
         description = request.json['description']
         image_base64 = request.json['image_base64']
-        disease = 'one'
-        prob = 42.69
-        conf = 'confident'
         decoded_image = base64.b64decode(image_base64.encode('utf-8'))
         image = Image.open(io.BytesIO(decoded_image))
         primarykey_index = Triage.query.count() + 1
         filename = secure_filename(str(primarykey_index) + '.jpg')
         image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
+        results = infer(img_path=app.config["IMAGE_UPLOADS"] + "/" + filename, ensemble_path='static/balanced_ensembles')
+        disease = results['disease']
+        prob = results['prob']
+        conf = results['conf']
         new_triage = Triage(email=str(email), name=str(name), description=str(description),
-                            image_url=request.url_root + 'static/uploads/' + filename, disease=disease, prob=prob, conf=conf)
+                            image_url=request.url_root + 'static/uploads/' + filename, disease=str(disease), prob=float(prob), conf=str(conf))
         db.session.add(new_triage)
         db.session.commit()
         return jsonify({'disease': str(disease), 'prob': float(prob), 'conf': str(conf), })
