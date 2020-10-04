@@ -1,7 +1,10 @@
 package com.implementai.android;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+import androidx.room.Room;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -20,21 +23,27 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.implementai.android.db.AppDatabase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CreateTriageRequestActivity extends AppCompatActivity {
 
-    private static final File storageDir = Environment.getExternalStoragePublicDirectory(
-            Environment.DIRECTORY_PICTURES);
+
+    private static final File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
     private Bitmap currentImageBitmap = null;
+    private Uri imageUri;
+//    private AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+//            AppDatabase.class, "database").build();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +56,14 @@ public class CreateTriageRequestActivity extends AppCompatActivity {
 
         if (imageCaptureIntent.resolveActivity(getPackageManager())!= null) {
             File photoFile;
-            Uri imageUri;
             try {
                 photoFile = createImageFile();
                 photoFile.delete();
 
-                imageUri = Uri.fromFile(photoFile);
+                imageUri = FileProvider.getUriForFile(this,
+                        "com.implementai.android.provider",
+                        photoFile);
+
                 imageCaptureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                 startActivityForResult(imageCaptureIntent, RequestCodes.REQUEST_IMAGE_CAPTURE);
             } catch (IOException e) {
@@ -73,10 +84,17 @@ public class CreateTriageRequestActivity extends AppCompatActivity {
     private static String currentPhotoPath;
     protected void handleImageCapture(Intent data) {
 
-        Bundle extras = data.getExtras();
-        assert extras != null;
+        this.getContentResolver().notifyChange(imageUri, null);
+        ContentResolver cr = this.getContentResolver();
 
-        Bitmap imageBitmap = (Bitmap) extras.get("data");
+        Bitmap imageBitmap = null;
+        try {
+            imageBitmap = android.provider.MediaStore.Images.Media.getBitmap(cr, imageUri);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         ImageView imageView = (ImageView) findViewById(R.id.TriageFormThumb);
         imageView.setImageBitmap(imageBitmap);
